@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tutorials: Git and GitHub · Created by Sylux</title>
+<meta name="description" content="A beginner-friendly guide for anyone who needs to submit projects using Git and GitHub." />
+<meta name="theme-color" content="#0969da" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)" />
+<meta property="og:title" content="Tutorials: Git and GitHub" />
+<meta property="og:description" content="A beginner-friendly guide for anyone who needs to submit projects using Git and GitHub." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📘</text></svg>" />
+<script>
+  try{var t=localStorage.getItem('t2-theme');if(!t)t=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;}catch(e){}
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark" disabled />
+<style>
+  :root { --bg:#fff; --sidebar-bg:#f6f8fa; --border:#d0d7de; --text:#1f2328; --accent:#0969da; --header-bg:rgba(255,255,255,.9); }
+  [data-theme="dark"] { --bg:#0d1117; --sidebar-bg:#010409; --border:#30363d; --text:#e6edf3; --accent:#4493f8; --header-bg:rgba(13,17,23,.9); }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Noto Sans,Helvetica,Arial,sans-serif; background:var(--bg); color:var(--text); }
+  header { position:sticky; top:0; z-index:20; backdrop-filter:blur(8px); background:var(--header-bg); border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px; padding:10px 16px; }
+  header h1 { font-size:16px; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .byline { font-size:12px; font-weight:400; opacity:.6; white-space:nowrap; }
+  header .spacer { flex:1; }
+  #search { padding:7px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text); min-width:200px; }
+  button { border:1px solid var(--border); background:var(--bg); color:var(--text); padding:7px 12px; border-radius:8px; cursor:pointer; }
+  button:hover { border-color:var(--accent); color:var(--accent); }
+  #menuBtn { display:none; }
+  .layout { display:flex; max-width:1280px; margin:0 auto; }
+  aside { width:300px; flex-shrink:0; position:sticky; top:57px; height:calc(100vh - 57px); overflow-y:auto; background:var(--sidebar-bg); border-right:1px solid var(--border); padding:16px 12px 40px; }
+  aside h2 { font-size:12px; text-transform:uppercase; letter-spacing:.06em; opacity:.7; margin:4px 8px 8px; }
+  #toc a { display:block; padding:5px 8px; border-radius:6px; color:var(--text); text-decoration:none; font-size:13.5px; line-height:1.35; }
+  #toc a:hover { background:var(--border); }
+  #toc a.active { background:var(--accent); color:#fff; }
+  #toc a.hidden { display:none; }
+  main { flex:1; min-width:0; padding:24px 32px 120px; }
+  .markdown-body { background:transparent !important; color:var(--text) !important; font-size:16px; }
+  .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 { scroll-margin-top: 75px; }
+  [data-theme="dark"] .markdown-body { --color-fg-default:#e6edf3; --color-canvas-default:transparent; --color-border-default:#30363d; --color-accent-fg:#4493f8; }
+
+  /* ---- Links (fix: dark blue / inconsistent in dark mode) ---- */
+  [data-theme="dark"] .markdown-body a,
+  [data-theme="dark"] .markdown-body a:link,
+  [data-theme="dark"] .markdown-body a:visited {
+    color: #6cb6ff !important;
+    text-decoration: none;
+  }
+  [data-theme="dark"] .markdown-body a:hover,
+  [data-theme="dark"] .markdown-body a:focus {
+    color: #a5d6ff !important;
+    text-decoration: underline;
+  }
+  /* ---------------------------------------------------------- */
+
+  /* ---- Tables in dark mode (fix: white rows / bad contrast) ---- */
+  [data-theme="dark"] .markdown-body { --color-canvas-subtle:#161b22; --color-border-muted:#30363d; --color-fg-muted:#8b949e; }
+  [data-theme="dark"] .markdown-body table { color:var(--text); }
+  [data-theme="dark"] .markdown-body table tr { background-color:transparent; border-top-color:#30363d; }
+  [data-theme="dark"] .markdown-body table tr:nth-child(2n) { background-color:#161b22; }
+  [data-theme="dark"] .markdown-body table th,
+  [data-theme="dark"] .markdown-body table td { border-color:#30363d; color:var(--text); }
+  [data-theme="dark"] .markdown-body table th { background-color:#161b22; }
+  [data-theme="dark"] .markdown-body table code { background:rgba(110,118,129,0.4) !important; color:#e6edf3; }
+  /* -------------------------------------------------------------- */
+
+  /* Code blocks — common practice: light gray bg + dark text / dark gray bg + off-white text */
+  .markdown-body pre { position:relative; background:#f6f8fa !important; border:1px solid var(--border); border-radius:8px; }
+  .markdown-body pre code { background:transparent !important; color:#1f2328; }
+  [data-theme="dark"] .markdown-body pre { background:#161b22 !important; border-color:#30363d; }
+  [data-theme="dark"] .markdown-body pre code { color:#e6edf3; background:transparent !important; }
+  /* Inline code */
+  .markdown-body :not(pre) > code { background:rgba(175,184,193,0.2) !important; color:#1f2328; padding:0.2em 0.4em; border-radius:6px; }
+  [data-theme="dark"] .markdown-body :not(pre) > code { background:rgba(110,118,129,0.4) !important; color:#e6edf3; }
+  .copy-btn { position:absolute; top:8px; right:8px; font-size:12px; padding:4px 8px; opacity:0; background:var(--bg); }
+  .markdown-body pre:hover .copy-btn { opacity:1; }
+  #backTop { position:fixed; bottom:20px; right:20px; display:none; z-index:30; }
+  #status { padding:12px 16px; border:1px solid var(--border); border-radius:10px; font-size:13px; opacity:.8; margin-bottom:16px; }
+  #progress { position:fixed; top:0; left:0; height:3px; width:0; background:var(--accent); z-index:50; }
+  /* Print page: standard margins on every page */
+  @page { margin: 20mm; }
+  /* Print */
+  @media print {
+    header, aside, #backTop, #progress, .copy-btn, #search, #themeBtn, #menuBtn, #printBtn, .search-wrap, .anchor, footer { display:none !important; }
+    main { padding:0 !important; }
+    body { background:#fff !important; color:#000 !important; }
+    .markdown-body { color:#000 !important; }
+    /* Each major section starts on a new page (except the first) */
+    .markdown-body h2 { break-before:page; }
+    .markdown-body h2:first-of-type { break-before:auto; }
+    /* Keep headings with following content, avoid splitting blocks */
+    .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 { break-after:avoid; }
+    .markdown-body pre, .markdown-body table, .markdown-body blockquote { break-inside:avoid; }
+    .markdown-body pre { background:#f6f8fa !important; border:1px solid #ccc; }
+    .markdown-body pre code { color:#000 !important; }
+    .markdown-body :not(pre) > code { background:#eee !important; color:#000 !important; }
+    .markdown-body a { color:#000 !important; text-decoration:underline; }
+    .markdown-body a[href^="http"]::after { content:" (" attr(href) ")"; font-size:0.8em; opacity:.7; }
+  }
+  /* Noscript */
+  noscript { display:block; padding:16px; text-align:center; color:#666; font-size:14px; }
+  /* External links */
+  .markdown-body a[href^="http"]::after { content:" ↗"; font-size:0.7em; vertical-align:super; opacity:.5; }
+  /* Anchor link */
+  .anchor { opacity:0; margin-left:6px; font-size:0.75em; color:var(--accent); text-decoration:none; transition:opacity .15s; }
+  .markdown-body h1:hover .anchor, .markdown-body h2:hover .anchor, .markdown-body h3:hover .anchor, .markdown-body h4:hover .anchor, .markdown-body h5:hover .anchor, .markdown-body h6:hover .anchor { opacity:1; }
+  .anchor:hover { text-decoration:underline; }
+  /* Collapsible TOC */
+  .toc-group { margin-bottom:2px; }
+  .toc-toggle { cursor:pointer; display:inline-block; width:14px; text-align:center; font-size:11px; opacity:.5; margin-right:2px; user-select:none; }
+  .toc-toggle:hover { opacity:1; }
+  .toc-children { overflow:hidden; transition:max-height .2s ease; }
+  .toc-children.collapsed { max-height:0 !important; }
+  /* Search highlight */
+  mark.search-hl { background:#fff3b0; color:inherit; padding:1px 2px; border-radius:3px; }
+  [data-theme="dark"] mark.search-hl { background:#664d03; color:#fff; }
+  mark.search-hl.current { outline:2px solid var(--accent); }
+  /* Search bar */
+  .search-wrap { display:flex; align-items:center; gap:6px; }
+  #searchInfo { font-size:12px; opacity:.7; white-space:nowrap; }
+  /* Focus visible */
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition:none !important; animation:none !important; }
+    #progress { display:none !important; }
+  }
+  /* Footer */
+  footer { text-align:center; padding:12px 16px 40px; font-size:12px; opacity:.55; }
+  @media (max-width:860px) {
+    #menuBtn { display:inline-block; }
+    aside { position:fixed; z-index:40; top:57px; left:0; transform:translateX(-100%); transition:transform .2s; width:85%; max-width:320px; height:calc(100vh - 57px); box-shadow:4px 0 24px rgba(0,0,0,.2); }
+    aside.open { transform:translateX(0); }
+    main { padding:16px 16px 100px; }
+    #search { min-width:0; width:130px; }
+    .byline { display:none; }
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<header>
+  <button id="menuBtn" aria-label="Toggle menu">☰</button>
+  <h1>📘 Tutorials: Git and GitHub <span class="byline">· Created by Sylux</span></h1>
+  <div class="spacer"></div>
+  <div class="search-wrap">
+    <input id="search" type="search" placeholder="Filter sections… ( / )" aria-label="Filter sections" />
+    <span id="searchInfo"></span>
+  </div>
+  <button id="printBtn" title="Print / Save as PDF" aria-label="Print">🖨️</button>
+  <button id="themeBtn" title="Toggle dark mode" aria-label="Toggle theme">🌙</button>
+</header>
+<div class="layout">
+  <aside id="sidebar">
+    <h2>Contents</h2>
+    <nav id="toc"></nav>
+  </aside>
+  <main>
+    <div id="status">Loading…</div>
+    <article id="content" class="markdown-body"></article>
+  </main>
+</div>
+<button id="backTop" aria-label="Back to top">↑ Top</button>
+<noscript><strong>This page requires JavaScript to render markdown.</strong></noscript>
+<footer id="footer"></footer>
+
+<!-- Embedded markdown so double-click (file://) works with no server -->
+<script id="embedded-md" type="text/plain">
+# Tutorials: Git and GitHub
+
+A beginner-friendly guide for anyone who needs to submit projects using Git and GitHub.
+
+- [1. Starting with Git](#1-starting-with-git)
+  - [1-1. Signing Up on GitHub](#1-1-signing-up-on-github)
+    - [1-1-a. Opening Your Project Repository](#1-1-a-opening-your-project-repository)
+  - [1-2. Installation on Windows](#1-2-installation-on-windows)
+    - [Updating Git on Windows](#updating-git-on-windows)
+  - [1-3. Installation on Linux and macOS](#1-3-installation-on-linux-and-macos)
+  - [1-4. Configure Git](#1-4-configure-git)
+  - [1-5. Authentication: HTTPS vs SSH](#1-5-authentication-https-vs-ssh)
+  - [1-6. Submitting a Project with CMD](#1-6-submitting-a-project-with-cmd)
+    - [Scenario A: You Were Given a Repository to Clone](#scenario-a-you-were-given-a-repository-to-clone)
+    - [Scenario B: You Need to Create Your Own Repository](#scenario-b-you-need-to-create-your-own-repository)
+    - [Command Reference](#command-reference)
+    - [Common CMD Mistakes](#common-cmd-mistakes)
+  - [1-7. Ignoring Files with .gitignore](#1-7-ignoring-files-with-gitignore)
+- [2. GitHub Desktop](#2-github-desktop)
+  - [2-1. Submitting a Project with GitHub Desktop](#2-1-submitting-a-project-with-github-desktop)
+- [3. VS Code Integrated Git](#3-vs-code-integrated-git)
+  - [3-1. Submitting a Project with VS Code](#3-1-submitting-a-project-with-vs-code)
+- [4. Troubleshooting](#4-troubleshooting)
+  - [4-1. Installation & Setup](#4-1-installation--setup)
+  - [4-2. Git Command Problems](#4-2-git-command-problems)
+  - [4-3. Authentication Problems](#4-3-authentication-problems)
+  - [4-4. Commit & Push Problems](#4-4-commit--push-problems)
+  - [4-5. GitHub Desktop Problems](#4-5-github-desktop-problems)
+  - [4-6. VS Code Problems](#4-6-vs-code-problems)
+
+---
+
+## 1. Starting with Git
+
+### 1-1. Signing Up on GitHub
+
+**Step 1: Open the sign-up page.**
+
+Go to **[github.com](https://github.com)** and click the **Sign up** button in the top-right corner and fill in the form.
+
+**Step 2: Verify your email.**
+
+GitHub will send a **6-digit code** to your email address.
+
+**Step 3: Complete the setup.**
+
+GitHub will ask a few optional questions. You can answer them or click **Skip personalization**. None of these choices affect your ability to use GitHub.
+
+**Step 4: You are in.**
+
+You will land on your GitHub dashboard. Your profile page is at `github.com/your-username`.
+
+---
+
+#### 1-1-a. Opening Your Project Repository
+
+A **repository** (or "repo") is a folder for your project that lives on GitHub.
+
+**Creating your own repository.**
+
+1. Click the **+** icon in the top-right corner of GitHub, then choose **New repository**.
+2. Give it a name (e.g., `my-project`).
+3. You can choose **Public** or **Private**.
+4. You can check **Add a README file** to create a starter README.
+5. Click **Create repository**.
+
+**Copy the repository URL.** On the repository page, click the green **Code** button and copy the **HTTPS** URL. It will look like:
+
+```
+https://github.com/your-username/my-project.git
+```
+
+You will need this URL in the next sections.
+
+---
+
+### 1-2. Installation on Windows
+
+**Installation.** Download and install the latest version of [Git](https://git-scm.com/downloads) for your operating system. The instructions below cover Windows first, then Linux and macOS.
+
+> Running into an error? Jump to the [Troubleshooting](#4-troubleshooting) section at the end.
+
+---
+
+You can install Git on Windows using the `winget` package manager directly from Command Prompt (CMD) or PowerShell.
+
+**Step 1: Check if winget is available.**
+
+Open Command Prompt and run:
+
+```cmd
+winget --version
+```
+
+If you see a version number (e.g., `v1.8.1911`), `winget` is ready. Skip to Step 3.
+
+If you see an error like `'winget' is not recognized`, `winget` is missing. Continue to Step 2.
+
+**Step 2: Install winget (if needed).**
+
+The easiest way to install `winget` is through the **Microsoft Store**. Search for **"App Installer"** and install it. This package includes `winget`.
+
+**Step 3: Install Git using winget.**
+
+In Command Prompt, run:
+
+```cmd
+winget install --id Git.Git -e --source winget
+```
+
+This downloads and installs the latest version of Git for Windows, including Git Bash and the Git GUI.
+
+**Step 4: Restart your terminal.**
+
+After installation finishes, **close and reopen Command Prompt**. This is required for the PATH changes to take effect.
+
+**Step 5: Verify the installation.**
+
+```cmd
+git --version
+```
+
+You should see something like `git version 2.55.0`. If you do, Git is ready to use.
+
+> **If winget is not available on your system**, you can download the standalone installer directly from the [official Git website](https://git-scm.com/downloads).
+
+---
+
+#### Updating Git on Windows
+
+How you update Git depends on how you installed it.
+
+**Method 1: If you installed Git with winget**
+
+```cmd
+winget upgrade --id Git.Git -e --source winget
+```
+
+**Method 2: If you installed Git using the official installer**
+
+```cmd
+git update-git-for-windows
+```
+
+> **Important:** `git update-git-for-windows` only works on Git versions **2.16.2 or later**. If your version is older, uninstall Git completely and install the latest version from the [official website](https://git-scm.com/downloads).
+
+**After updating, verify the new version:**
+
+```cmd
+git --version
+```
+
+---
+
+### 1-3. Installation on Linux and macOS
+
+For Linux and macOS, follow the official installation guide:
+
+🔗 **[Git Downloads and Installation Guide](https://git-scm.com/downloads)**
+
+**Linux:** Use your distribution's package manager.
+
+| Distribution       | Command                        |
+| ------------------ | ------------------------------ |
+| Debian / Ubuntu    | `sudo apt install git`         |
+| Fedora             | `sudo dnf install git`         |
+| CentOS / RedHat    | `sudo yum install git`         |
+| Arch Linux         | `sudo pacman -S git`           |
+| openSUSE           | `sudo zypper install git`      |
+
+**macOS:** Install [Homebrew](https://brew.sh/), then run:
+
+```bash
+brew install git
+```
+
+To update later:
+
+```bash
+brew upgrade git
+```
+
+**Verify the installation on any platform:**
+
+```bash
+git --version
+```
+
+---
+
+
+### 1-4. Configure Git
+
+After installing Git, you need to tell it who you are.
+Open your terminal and run these two commands, replacing the values with your own name and email:
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+```
+
+**Verify your configuration:**
+
+```bash
+git config --list
+```
+
+You should see your name and email in the output.
+
+### 1-5. Authentication: HTTPS vs SSH
+
+When you push to GitHub, Git has to prove you are who you say you are. There are two ways to do this, and you only need one of them.
+
+---
+
+#### Setting up SSH (optional)
+
+**Step 1: Check for existing keys.**
+
+```bash
+ls -al ~/.ssh
+```
+
+On Windows, run this in **Git Bash**. If you see `id_ed25519.pub` or `id_rsa.pub`, you already have a key — skip to Step 3.
+
+**Step 2: Generate a new SSH key.**
+
+Replace the email with the one on your GitHub account:
+
+```bash
+ssh-keygen -t ed25519 -C "your.email@example.com"
+```
+
+- Press **Enter** to accept the default file location.
+- Enter a passphrase for extra security, or press **Enter** twice to skip.
+
+This creates two files in `~/.ssh/`:
+
+- `id_ed25519` — your **private** key.
+- `id_ed25519.pub` — your **public** key. This is the one you give to GitHub.
+
+
+**Step 5: Add the key to GitHub.**
+
+1. Go to **github.com** and click your profile picture → **Settings**.
+2. In the left sidebar, click **SSH and GPG keys**.
+3. Click **New SSH key**.
+4. Give it a title (e.g., "My laptop").
+5. Paste your public key into the **Key** field.
+6. Click **Add SSH key**.
+
+**Step 6: Test the connection.**
+
+```bash
+ssh -T git@github.com
+```
+
+The first time, you will be asked to confirm the host fingerprint — type `yes`. If it works, you will see:
+
+```
+Hi your-username! You've successfully authenticated...
+```
+
+---
+
+### 1-6. Submitting a Project with CMD
+
+This section walks through submitting a project entirely from the command line. It works in **Command Prompt (CMD)** on Windows, and the same commands work in **Git Bash**, **PowerShell**, and the **Terminal** on Linux and macOS.
+
+**Before you start:**
+
+- Git is installed ([Section 1-2](#1-2-installation-on-windows))
+- Git is configured with your name and email ([Section 1-5](#1-5-configure-git))
+- You have the repository URL copied ([Section 1-1](#1-1-signing-up-on-github))
+
+---
+
+#### Scenario A: You Were Given a Repository to Clone
+
+**Step 1: Navigate to where you want to work.**
+
+Use `cd` to move to a folder you want to clone your repo in:
+
+```cmd
+cd "path"
+```
+
+**Step 2: Clone the repository.**
+
+Paste the repository URL after `git clone`:
+
+```cmd
+git clone https://github.com/your-username/my-project.git
+```
+
+Git downloads the repository into a new folder with the same name.
+
+**Step 3: Enter the repository folder.**
+
+```cmd
+cd my-project
+```
+
+This step matters. All the Git commands below only work if you are inside the repository folder.
+
+**Step 4: Add your project files.**
+
+Copy your finished files into this folder using File Explorer or Finder. Then check that Git can see them:
+
+```cmd
+git status
+```
+
+New files will appear in **red** under "Untracked files."
+
+**Step 5: Stage your files.**
+
+Staging tells Git which files to include in your next commit:
+
+```cmd
+git add .
+```
+
+The `.` means "everything in this folder and its subfolders." Run `git status` again — the files should now be **green** under "Changes to be committed."
+
+**Step 6: Commit your changes.**
+
+A commit is a saved snapshot with a message:
+
+```cmd
+git commit -m "Completed project"
+```
+
+**Step 7: Push to GitHub.**
+
+```cmd
+git push
+```
+
+This uploads your commit to GitHub. The first time you push, Git may open a browser window asking you to sign in to GitHub — complete the sign-in and it will remember you.
+
+**Step 8: Verify.**
+
+Open your repository on **github.com** in your browser and refresh the page. Your files and your commit message should be visible.
+
+---
+
+#### Scenario B: You Need to Create Your Own Repository
+
+Use this if you already have a project folder on your computer and no repository on GitHub yet.
+
+**Step 1: Create the repository on GitHub.**
+
+Follow the steps in [Section 1-1](#1-1-signing-up-on-github) to create a new, empty repository. Copy the HTTPS URL.
+
+**Step 2: Navigate to your project folder.**
+
+```cmd
+cd "path"
+```
+
+**Step 3: Initialize Git in this folder.**
+
+```cmd
+git init
+```
+
+This creates the hidden `.git` folder that turns a normal folder into a Git repository.
+
+**Step 4: Stage and commit your files.**
+
+```cmd
+git add .
+git commit -m "Initial commit"
+```
+
+**Step 5: Connect your folder to GitHub.**
+
+```cmd
+git remote add origin https://github.com/your-username/my-project.git
+```
+
+**Step 6: Set the branch name to `main`.**
+
+```cmd
+git branch -M main
+```
+
+**Step 7: Push your files.**
+
+```cmd
+git push -u origin main
+```
+
+The `-u` flag links your local branch to the remote one, so future pushes only need `git push`.
+
+**Step 8: Verify.**
+
+Refresh your repository page on **github.com**. Your files should now appear there.
+
+---
+
+#### Command Reference
+
+| Command                       | What it does                                          |
+| ----------------------------- | ----------------------------------------------------- |
+| `cd folder-name`              | Move into a folder                                    |
+| `cd ..`                       | Move up one folder                                    |
+| `git clone <url>`             | Download a repository from GitHub                     |
+| `git status`                  | Show which files have changed                         |
+| `git add .`                   | Stage all changed files                               |
+| `git add file.txt`            | Stage one specific file                               |
+| `git commit -m "message"`     | Save a snapshot with a message                        |
+| `git push`                    | Upload commits to GitHub                              |
+| `git pull`                    | Download the latest changes from GitHub               |
+| `git log --oneline -5`        | Show your last five commits                           |
+| `git remote -v`               | Show which GitHub repository you are connected to     |
+
+---
+
+#### Common CMD Mistakes
+
+- **Running Git commands in the wrong folder.** Run `git status`. If it says `not a git repository`, you are in the wrong place. Use `cd` to enter the cloned folder first.
+- **Forgetting to push.** `git commit` only saves locally. Your changes will not appear on GitHub until you run `git push`.
+- **Using `git add` without `.`** — `git add` alone does nothing. Use `git add .` or `git add filename`.
+- **Forgetting the commit message.** `git commit` without `-m "message"` will open an editor that beginners often get stuck in. Always include the `-m` flag.
+
+---
+
+### 1-7. Ignoring Files with .gitignore
+
+A `.gitignore` file tells Git which files **not** to track or commit. Use it to avoid committing passwords, `.env` files, caches, build output, and folders like `node_modules/`.
+
+**Create it** in your repository root, named exactly:
+
+```text
+.gitignore
+```
+
+**Add patterns** — one per line:
+
+```gitignore
+# Files
+secret.txt
+.env
+
+# Folders
+node_modules/
+__pycache__/
+.vscode/
+
+# Extensions
+*.log
+*.pyc
+
+# OS junk
+.DS_Store
+Thumbs.db
+```
+
+Lines starting with `#` are comments.
+
+**Check if it works:**
+
+```bash
+git status
+git check-ignore -v path/to/file
+```
+
+Ignored files will not appear in `git status`.
+
+**If the file is already tracked**, `.gitignore` will not affect it. Stop tracking it first:
+
+```bash
+git rm --cached filename
+# or for a folder:
+git rm -r --cached folder-name
+```
+
+**Commit and push:**
+
+```bash
+git add .gitignore
+git commit -m "Add .gitignore"
+git push
+```
+
+**Common mistake:** forgetting to commit `.gitignore` itself.
+
+---
+
+## 2. GitHub Desktop
+
+GitHub Desktop is a free, official application from GitHub that provides a visual interface for Git. Instead of typing commands, you use buttons and menus.
+
+**Suitable for beginners.** You can visually see your file changes and project history. Common actions like cloning, committing, and pushing are all buttons.
+
+**Installation.** Download and install the latest version of [GitHub Desktop](https://github.com/apps/desktop). It includes Git, so you do not need to install Git separately (though having Git installed is still useful for the command line).
+
+### 2-1. Submitting a Project with GitHub Desktop
+
+**Step 1: Clone the project repository.**
+
+Go to **File → Clone Repository**, paste the repository URL, choose a local folder, and click **Clone**.
+
+**Step 2: Add your project files.**
+
+Copy your project files into the cloned folder. GitHub Desktop will detect the new files automatically.
+
+**Step 3: Review your changes.**
+
+In the left panel, you will see a list of changed files. A green plus means a new file; a yellow dot means a modified file.
+
+**Step 4: Write a commit message.**
+
+At the bottom-left, type a short message like `"Completed project"`. Then click **Commit to main**.
+
+**Step 5: Push to GitHub.**
+
+Click the **Push origin** button at the top. This uploads your commit to GitHub.
+
+**Step 6: Verify.**
+
+Open the repository on **github.com** in your browser and confirm your files are there.
+
+---
+
+## 3. VS Code Integrated Git
+
+Visual Studio Code has Git built directly into it. If you already use VS Code to write your code, you can commit and push without leaving the editor or installing another app.
+
+**Prerequisite:** Git must be installed on your system (see [Section 1](#1-starting-with-git)). You should also be signed in to GitHub from VS Code.
+
+### 3-1. Submitting a Project with VS Code
+
+**Step 1: Open the project folder.**
+
+Go to **File → Open Folder** and select the folder containing your project. This folder will become your repository.
+
+**Step 2: Open the Source Control panel.**
+
+Click the **Source Control icon** in the left sidebar (it looks like a branching line with dots). The keyboard shortcut is `Ctrl+Shift+G` (Windows) or `Cmd+Shift+G` (Mac).
+
+**Step 3: Initialize the repository (first time only).**
+
+If the folder is not already a Git repository, the panel will show a button that says **"Initialize Repository."** Click it. VS Code creates the hidden Git files and starts tracking the project.
+
+**Step 4: Stage the files.**
+
+Every new or changed file appears in the panel with a letter next to it:
+
+- **U** = untracked (new)
+- **M** = modified
+
+To stage **one file**, hover over it and click the **plus (+)** icon.
+
+To stage **all files**, click the **plus** icon next to the "Changes" heading, or use the **Stage All Changes** button.
+
+Staging tells Git: "These are the files I want to include in my next commit."
+
+**Step 5: Write a commit message and commit.**
+
+Type a short message in the text box at the top of the Source Control panel, such as `"Completed project"`. Then click the **checkmark icon** (or press `Ctrl+Enter`) to commit.
+
+**Step 6: Push to GitHub.**
+
+Committing only saves changes locally. To submit your work, click the **Push** button or **Sync Changes** button that appears after committing. If this is the first time, VS Code may show **"Publish Branch"** instead, which creates the remote repository on GitHub and pushes at the same time.
+
+**Step 7: Verify.**
+
+Open the repository on **github.com** in your browser and confirm your files are there. That is the final check that your submission worked.
+
+---
+
+## 4. Troubleshooting
+
+This section lists the most common errors people run into and how to fix them. Find the error message or the section that matches your problem.
+
+- [4-1. Installation & Setup](#4-1-installation--setup)
+- [4-2. Git Command Problems](#4-2-git-command-problems)
+- [4-3. Authentication Problems](#4-3-authentication-problems)
+- [4-4. Commit & Push Problems](#4-4-commit--push-problems)
+- [4-5. GitHub Desktop Problems](#4-5-github-desktop-problems)
+- [4-6. VS Code Problems](#4-6-vs-code-problems)
+- [4-7. Copilot Problems](#4-7-copilot-problems)
+
+---
+
+### 4-1. Installation & Setup
+
+#### ❌ `'git' is not recognized as an internal or external command`
+
+Installation may have been successful, but Windows cannot find Git. Work through these causes in order.
+
+**Cause 1: You never restarted your terminal after installing Git.**
+
+The PATH is updated during installation, but terminals that are already open do not see the change. **Close and reopen CMD**, then try `git --version` again.
+
+**Cause 2: Git was installed without being added to the system PATH.**
+
+1. Open the Start menu and search for **"Edit the system environment variables"**.
+2. Click **"Environment Variables"**.
+3. Under **"System variables"**, find the variable called **`Path`** and click **"Edit"**.
+4. Click **"New"** and add the path to Git's `cmd` folder. Example: `C:\Program Files\Git\cmd`
+5. Click **OK** on all windows to save.
+6. **Close and reopen your terminal** for the change to take effect.
+
+---
+
+#### ❌ `'winget' is not recognized`
+
+`winget` is not installed or not on your PATH.
+
+**Fix:**
+
+1. Open the **Microsoft Store** and search for **"App Installer"**.
+2. Install or update it. This package includes `winget`.
+3. Close and reopen your terminal, then run `winget --version` again.
+
+> **Note:** `winget` requires Windows 10 version 1809 or later. On older versions of Windows, download Git directly from the [official website](https://git-scm.com/downloads) instead.
+
+---
+
+#### ❌ `git update-git-for-windows` fails or says the command is unknown
+
+This command only works on Git versions **2.16.2 or later**.
+
+**Fix:** Uninstall Git completely and install the latest version from the [official website](https://git-scm.com/downloads).
+
+---
+
+#### ❌ Git installed, but `git --version` shows an old version
+
+You may have more than one version of Git installed, and the terminal is picking up the wrong one.
+
+**Fix:** Open a **new** Command Prompt and run:
+
+```cmd
+where git
+```
+
+or in PowerShell:
+
+```cmd
+where.exe git
+```
+
+If it prints more than one path, the first one is what your terminal is using. You can either remove the older installation, or reorder your system `Path` variable so the newer Git path appears first.
+
+---
+
+### 4-2. Git Command Problems
+
+#### ❌ `fatal: not a git repository (or any of the parent directories): .git`
+
+You are running a Git command in a folder that has not been initialized as a Git repository.
+
+**Fix:** Make sure you are in the correct folder. If you just cloned the repository, `cd` into the cloned folder first. If you need to start tracking this folder, run:
+
+```cmd
+git init
+```
+
+---
+
+#### ❌ `fatal: destination path 'project-name' already exists and is not an empty directory`
+
+You are trying to clone a repository into a folder that already contains files.
+
+**Fix:** Either delete or rename the existing folder, or clone into a new folder name:
+
+```cmd
+git clone <repository-url> new-folder-name
+```
+
+---
+
+#### ❌ `error: failed to push some refs` / `Updates were rejected`
+
+This happens when the remote repository has changes that you do not have locally. This is common when you edit files directly on GitHub and then try to push from your computer.
+
+**Fix:** Pull the remote changes first, then push again:
+
+```cmd
+git pull
+git push
+```
+
+If you see a message about `unrelated histories`, or you are sure you want to overwrite the remote with your local version (use with caution):
+
+```cmd
+git push --force
+```
+
+> **Warning:** `--force` overwrites the remote history.
+
+---
+
+#### ❌ `error: pathspec 'file.txt' did not match any file(s) known to git`
+
+You tried to add or commit a file that Git cannot find, usually because the file name is misspelled or the file is in a different folder.
+
+**Fix:** Check the spelling and the current folder. Use `git status` to see what Git can actually see.
+
+---
+
+#### ❌ `git status` shows nothing to commit, but I changed files
+
+**Cause 1:** Your changes are already committed. Run `git log --oneline -5` to see your recent commits.
+
+**Cause 2:** You are in the wrong folder. Run `pwd` (Linux/macOS) or `cd` (Windows) to check where you are.
+
+**Cause 3:** The files are listed in `.gitignore`, so Git is intentionally ignoring them. Open `.gitignore` and check if your file's name or extension is listed there.
+
+---
+
+### 4-3. Authentication Problems
+
+#### ❌ `remote: Support for password authentication was removed`
+
+GitHub no longer accepts your account password over HTTPS. You will see this when Git tries to use a saved password instead of a browser sign-in or token.
+
+**Fix:** Clear the stored credential so Git prompts you to sign in again.
+
+- **Windows:** Open **Credential Manager** → **Windows Credentials** → remove the entry named `git:https://github.com`.
+- **macOS:** Open **Keychain Access** → search for `github.com` → delete the matching entry.
+
+Then push again — Git will open a browser window for sign-in.
+
+Alternatively, switch to SSH. See [Section 1-4](#1-4-authentication-https-vs-ssh).
+
+---
+
+#### ❌ `Permission denied (publickey)` when using SSH
+
+GitHub rejected your SSH key. There are four common causes — work through them in order.
+
+**Cause 1: No SSH key has been added to GitHub.**
+
+Follow [Section 1-4](#1-4-authentication-https-vs-ssh) to generate a key and add the public half to your account.
+
+**Cause 2: The key is not loaded into the SSH agent.**
+
+```bash
+ssh-add -l
+```
+
+If this prints *"The agent has no identities,"* add your key:
+
+```bash
+ssh-add ~/.ssh/id_ed25519
+```
+
+**Cause 3: Your remote is still using HTTPS.**
+
+```bash
+git remote -v
+```
+
+If the URL starts with `https://`, switch it:
+
+```bash
+git remote set-url origin git@github.com:your-username/my-project.git
+```
+
+**Cause 4: You need to see which key is being offered.**
+
+```bash
+ssh -vT git@github.com
+```
+
+The `-v` flag prints verbose output showing which key Git tried and where it failed.
+
+---
+
+#### ❌ `remote: Repository not found`
+
+This usually means one of three things:
+
+- **The URL is wrong.** Double-check the repository link on GitHub.
+- **The repository is private** and you are not authenticated. Make sure you are signed in — Git will prompt a browser sign-in on first push.
+- **You do not have access** to the repository. Ask the repository owner to confirm you have access.
+
+---
+
+### 4-4. Commit & Push Problems
+
+#### ❌ I committed my changes but they are not visible on GitHub
+
+You probably forgot to **push**. Committing saves changes only on your own computer.
+
+**Fix:** Run:
+
+```cmd
+git push
+```
+
+Then open the repository on github.com and refresh the page to confirm the files are there.
+
+---
+
+#### ❌ `Please tell me who you are` / `Author identity unknown`
+
+You have not set your Git username and email yet.
+
+**Fix:** Follow [Section 1-5](#1-5-configure-git).
+
+---
+
+#### ❌ I committed the wrong files (or a password, or a large file)
+
+If you have not pushed yet, you can undo the commit while keeping your files:
+
+```cmd
+git reset --soft HEAD~1
+```
+
+This removes the last commit but keeps your changes staged so you can re-commit correctly.
+
+---
+
+#### ❌ `warning: LF will be replaced by CRLF`
+
+This is a line-ending warning, not an error. It appears on Windows when Git converts line endings. **You can safely ignore it.**
+
+If the warning bothers you, you can silence it with:
+
+```cmd
+git config --global core.autocrlf true
+```
+
+---
+
+#### ❌ My files are not showing up on GitHub, but `git status` says they are committed
+
+**Cause 1:** You committed but did not push. Run `git push`.
+
+**Cause 2:** You pushed to a different branch than the one you are supposed to use. Run `git branch` to see your current branch, and push to the correct one:
+
+```cmd
+git push origin main
+```
+
+**Cause 3:** The files are in `.gitignore`. See [Section 1-7](#1-7-ignoring-files-with-gitignore).
+
+---
+
+### 4-5. GitHub Desktop Problems
+
+#### ❌ GitHub Desktop does not detect my new files
+
+**Fix:** Make sure the files are inside the repository folder, not next to it. In GitHub Desktop, click **Repository → Show in Explorer/Finder** to see exactly which folder is being tracked.
+
+**Fix:** Click **Repository → Refresh** (or press `F5`) to force a rescan.
+
+---
+
+#### ❌ The "Push origin" button is missing or greyed out
+
+This usually means there is nothing to push — either you have not committed anything yet, or everything is already pushed.
+
+**Fix:** Check for uncommitted changes in the left panel. If there are none, and the top says "No local changes," you are up to date.
+
+---
+
+#### ❌ I see "Publish branch" instead of "Push origin"
+
+This is normal the first time you push a new repository. Click **Publish branch** — it creates the repository on GitHub and pushes your commit in one step.
+
+---
+
+### 4-6. VS Code Problems
+
+#### ❌ The Source Control icon shows no changes
+
+**Cause 1:** You have not saved your files. VS Code only tracks saved files. Press `Ctrl+S` on each file.
+
+**Cause 2:** The folder is not a Git repository. Follow [Section 3-1, Step 3](#3-1-submitting-a-project-with-vs-code) to initialize it.
+
+**Cause 3:** The folder you opened is not the repository root. Close the folder and open the correct one with **File → Open Folder**.
+
+---
+
+#### ❌ The Push button does not appear after committing
+
+This usually means the repository is not yet connected to GitHub.
+
+**Fix:** VS Code should show a **"Publish Branch"** button instead. Click it and choose whether the repository should be public or private.
+
+If neither button appears, open a terminal in VS Code (``Ctrl+` ``) and run:
+
+```cmd
+git remote -v
+```
+
+If this prints nothing, there is no remote. Ask the repository owner for the correct repository URL, then run:
+
+```cmd
+git remote add origin <repository-url>
+git push -u origin main
+```
+
+---
+
+#### ❌ VS Code asks me to sign in to GitHub repeatedly
+
+**Fix:** Open the Command Palette (`Ctrl+Shift+P`), run **"GitHub: Sign Out"**, then run **"GitHub: Sign In"** and complete the browser flow.
+
+If the problem continues, check that your system clock is accurate, and make sure you are not using a VPN or proxy that might interfere with the OAuth flow.
+
+---
+
+</script>
+
+<script>/* marked@12.0.2 inlined for offline/double-click use */
+/**
+ * marked v12.0.2 - a markdown parser
+ * Copyright (c) 2011-2024, Christopher Jeffrey. (MIT Licensed)
+ * https://github.com/markedjs/marked
+ */
+!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?t(exports):"function"==typeof define&&define.amd?define(["exports"],t):t((e="undefined"!=typeof globalThis?globalThis:e||self).marked={})}(this,(function(e){"use strict";function t(){return{async:!1,breaks:!1,extensions:null,gfm:!0,hooks:null,pedantic:!1,renderer:null,silent:!1,tokenizer:null,walkTokens:null}}function n(t){e.defaults=t}e.defaults={async:!1,breaks:!1,extensions:null,gfm:!0,hooks:null,pedantic:!1,renderer:null,silent:!1,tokenizer:null,walkTokens:null};const s=/[&<>"']/,r=new RegExp(s.source,"g"),i=/[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/,l=new RegExp(i.source,"g"),o={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"},a=e=>o[e];function c(e,t){if(t){if(s.test(e))return e.replace(r,a)}else if(i.test(e))return e.replace(l,a);return e}const h=/&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/gi;function p(e){return e.replace(h,((e,t)=>"colon"===(t=t.toLowerCase())?":":"#"===t.charAt(0)?"x"===t.charAt(1)?String.fromCharCode(parseInt(t.substring(2),16)):String.fromCharCode(+t.substring(1)):""))}const u=/(^|[^\[])\^/g;function k(e,t){let n="string"==typeof e?e:e.source;t=t||"";const s={replace:(e,t)=>{let r="string"==typeof t?t:t.source;return r=r.replace(u,"$1"),n=n.replace(e,r),s},getRegex:()=>new RegExp(n,t)};return s}function g(e){try{e=encodeURI(e).replace(/%25/g,"%")}catch(e){return null}return e}const f={exec:()=>null};function d(e,t){const n=e.replace(/\|/g,((e,t,n)=>{let s=!1,r=t;for(;--r>=0&&"\\"===n[r];)s=!s;return s?"|":" |"})).split(/ \|/);let s=0;if(n[0].trim()||n.shift(),n.length>0&&!n[n.length-1].trim()&&n.pop(),t)if(n.length>t)n.splice(t);else for(;n.length<t;)n.push("");for(;s<n.length;s++)n[s]=n[s].trim().replace(/\\\|/g,"|");return n}function x(e,t,n){const s=e.length;if(0===s)return"";let r=0;for(;r<s;){const i=e.charAt(s-r-1);if(i!==t||n){if(i===t||!n)break;r++}else r++}return e.slice(0,s-r)}function b(e,t,n,s){const r=t.href,i=t.title?c(t.title):null,l=e[1].replace(/\\([\[\]])/g,"$1");if("!"!==e[0].charAt(0)){s.state.inLink=!0;const e={type:"link",raw:n,href:r,title:i,text:l,tokens:s.inlineTokens(l)};return s.state.inLink=!1,e}return{type:"image",raw:n,href:r,title:i,text:c(l)}}class w{options;rules;lexer;constructor(t){this.options=t||e.defaults}space(e){const t=this.rules.block.newline.exec(e);if(t&&t[0].length>0)return{type:"space",raw:t[0]}}code(e){const t=this.rules.block.code.exec(e);if(t){const e=t[0].replace(/^ {1,4}/gm,"");return{type:"code",raw:t[0],codeBlockStyle:"indented",text:this.options.pedantic?e:x(e,"\n")}}}fences(e){const t=this.rules.block.fences.exec(e);if(t){const e=t[0],n=function(e,t){const n=e.match(/^(\s+)(?:```)/);if(null===n)return t;const s=n[1];return t.split("\n").map((e=>{const t=e.match(/^\s+/);if(null===t)return e;const[n]=t;return n.length>=s.length?e.slice(s.length):e})).join("\n")}(e,t[3]||"");return{type:"code",raw:e,lang:t[2]?t[2].trim().replace(this.rules.inline.anyPunctuation,"$1"):t[2],text:n}}}heading(e){const t=this.rules.block.heading.exec(e);if(t){let e=t[2].trim();if(/#$/.test(e)){const t=x(e,"#");this.options.pedantic?e=t.trim():t&&!/ $/.test(t)||(e=t.trim())}return{type:"heading",raw:t[0],depth:t[1].length,text:e,tokens:this.lexer.inline(e)}}}hr(e){const t=this.rules.block.hr.exec(e);if(t)return{type:"hr",raw:t[0]}}blockquote(e){const t=this.rules.block.blockquote.exec(e);if(t){let e=t[0].replace(/\n {0,3}((?:=+|-+) *)(?=\n|$)/g,"\n    $1");e=x(e.replace(/^ *>[ \t]?/gm,""),"\n");const n=this.lexer.state.top;this.lexer.state.top=!0;const s=this.lexer.blockTokens(e);return this.lexer.state.top=n,{type:"blockquote",raw:t[0],tokens:s,text:e}}}list(e){let t=this.rules.block.list.exec(e);if(t){let n=t[1].trim();const s=n.length>1,r={type:"list",raw:"",ordered:s,start:s?+n.slice(0,-1):"",loose:!1,items:[]};n=s?`\\d{1,9}\\${n.slice(-1)}`:`\\${n}`,this.options.pedantic&&(n=s?n:"[*+-]");const i=new RegExp(`^( {0,3}${n})((?:[\t ][^\\n]*)?(?:\\n|$))`);let l="",o="",a=!1;for(;e;){let n=!1;if(!(t=i.exec(e)))break;if(this.rules.block.hr.test(e))break;l=t[0],e=e.substring(l.length);let s=t[2].split("\n",1)[0].replace(/^\t+/,(e=>" ".repeat(3*e.length))),c=e.split("\n",1)[0],h=0;this.options.pedantic?(h=2,o=s.trimStart()):(h=t[2].search(/[^ ]/),h=h>4?1:h,o=s.slice(h),h+=t[1].length);let p=!1;if(!s&&/^ *$/.test(c)&&(l+=c+"\n",e=e.substring(c.length+1),n=!0),!n){const t=new RegExp(`^ {0,${Math.min(3,h-1)}}(?:[*+-]|\\d{1,9}[.)])((?:[ \t][^\\n]*)?(?:\\n|$))`),n=new RegExp(`^ {0,${Math.min(3,h-1)}}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$)`),r=new RegExp(`^ {0,${Math.min(3,h-1)}}(?:\`\`\`|~~~)`),i=new RegExp(`^ {0,${Math.min(3,h-1)}}#`);for(;e;){const a=e.split("\n",1)[0];if(c=a,this.options.pedantic&&(c=c.replace(/^ {1,4}(?=( {4})*[^ ])/g,"  ")),r.test(c))break;if(i.test(c))break;if(t.test(c))break;if(n.test(e))break;if(c.search(/[^ ]/)>=h||!c.trim())o+="\n"+c.slice(h);else{if(p)break;if(s.search(/[^ ]/)>=4)break;if(r.test(s))break;if(i.test(s))break;if(n.test(s))break;o+="\n"+c}p||c.trim()||(p=!0),l+=a+"\n",e=e.substring(a.length+1),s=c.slice(h)}}r.loose||(a?r.loose=!0:/\n *\n *$/.test(l)&&(a=!0));let u,k=null;this.options.gfm&&(k=/^\[[ xX]\] /.exec(o),k&&(u="[ ] "!==k[0],o=o.replace(/^\[[ xX]\] +/,""))),r.items.push({type:"list_item",raw:l,task:!!k,checked:u,loose:!1,text:o,tokens:[]}),r.raw+=l}r.items[r.items.length-1].raw=l.trimEnd(),r.items[r.items.length-1].text=o.trimEnd(),r.raw=r.raw.trimEnd();for(let e=0;e<r.items.length;e++)if(this.lexer.state.top=!1,r.items[e].tokens=this.lexer.blockTokens(r.items[e].text,[]),!r.loose){const t=r.items[e].tokens.filter((e=>"space"===e.type)),n=t.length>0&&t.some((e=>/\n.*\n/.test(e.raw)));r.loose=n}if(r.loose)for(let e=0;e<r.items.length;e++)r.items[e].loose=!0;return r}}html(e){const t=this.rules.block.html.exec(e);if(t){return{type:"html",block:!0,raw:t[0],pre:"pre"===t[1]||"script"===t[1]||"style"===t[1],text:t[0]}}}def(e){const t=this.rules.block.def.exec(e);if(t){const e=t[1].toLowerCase().replace(/\s+/g," "),n=t[2]?t[2].replace(/^<(.*)>$/,"$1").replace(this.rules.inline.anyPunctuation,"$1"):"",s=t[3]?t[3].substring(1,t[3].length-1).replace(this.rules.inline.anyPunctuation,"$1"):t[3];return{type:"def",tag:e,raw:t[0],href:n,title:s}}}table(e){const t=this.rules.block.table.exec(e);if(!t)return;if(!/[:|]/.test(t[2]))return;const n=d(t[1]),s=t[2].replace(/^\||\| *$/g,"").split("|"),r=t[3]&&t[3].trim()?t[3].replace(/\n[ \t]*$/,"").split("\n"):[],i={type:"table",raw:t[0],header:[],align:[],rows:[]};if(n.length===s.length){for(const e of s)/^ *-+: *$/.test(e)?i.align.push("right"):/^ *:-+: *$/.test(e)?i.align.push("center"):/^ *:-+ *$/.test(e)?i.align.push("left"):i.align.push(null);for(const e of n)i.header.push({text:e,tokens:this.lexer.inline(e)});for(const e of r)i.rows.push(d(e,i.header.length).map((e=>({text:e,tokens:this.lexer.inline(e)}))));return i}}lheading(e){const t=this.rules.block.lheading.exec(e);if(t)return{type:"heading",raw:t[0],depth:"="===t[2].charAt(0)?1:2,text:t[1],tokens:this.lexer.inline(t[1])}}paragraph(e){const t=this.rules.block.paragraph.exec(e);if(t){const e="\n"===t[1].charAt(t[1].length-1)?t[1].slice(0,-1):t[1];return{type:"paragraph",raw:t[0],text:e,tokens:this.lexer.inline(e)}}}text(e){const t=this.rules.block.text.exec(e);if(t)return{type:"text",raw:t[0],text:t[0],tokens:this.lexer.inline(t[0])}}escape(e){const t=this.rules.inline.escape.exec(e);if(t)return{type:"escape",raw:t[0],text:c(t[1])}}tag(e){const t=this.rules.inline.tag.exec(e);if(t)return!this.lexer.state.inLink&&/^<a /i.test(t[0])?this.lexer.state.inLink=!0:this.lexer.state.inLink&&/^<\/a>/i.test(t[0])&&(this.lexer.state.inLink=!1),!this.lexer.state.inRawBlock&&/^<(pre|code|kbd|script)(\s|>)/i.test(t[0])?this.lexer.state.inRawBlock=!0:this.lexer.state.inRawBlock&&/^<\/(pre|code|kbd|script)(\s|>)/i.test(t[0])&&(this.lexer.state.inRawBlock=!1),{type:"html",raw:t[0],inLink:this.lexer.state.inLink,inRawBlock:this.lexer.state.inRawBlock,block:!1,text:t[0]}}link(e){const t=this.rules.inline.link.exec(e);if(t){const e=t[2].trim();if(!this.options.pedantic&&/^</.test(e)){if(!/>$/.test(e))return;const t=x(e.slice(0,-1),"\\");if((e.length-t.length)%2==0)return}else{const e=function(e,t){if(-1===e.indexOf(t[1]))return-1;let n=0;for(let s=0;s<e.length;s++)if("\\"===e[s])s++;else if(e[s]===t[0])n++;else if(e[s]===t[1]&&(n--,n<0))return s;return-1}(t[2],"()");if(e>-1){const n=(0===t[0].indexOf("!")?5:4)+t[1].length+e;t[2]=t[2].substring(0,e),t[0]=t[0].substring(0,n).trim(),t[3]=""}}let n=t[2],s="";if(this.options.pedantic){const e=/^([^'"]*[^\s])\s+(['"])(.*)\2/.exec(n);e&&(n=e[1],s=e[3])}else s=t[3]?t[3].slice(1,-1):"";return n=n.trim(),/^</.test(n)&&(n=this.options.pedantic&&!/>$/.test(e)?n.slice(1):n.slice(1,-1)),b(t,{href:n?n.replace(this.rules.inline.anyPunctuation,"$1"):n,title:s?s.replace(this.rules.inline.anyPunctuation,"$1"):s},t[0],this.lexer)}}reflink(e,t){let n;if((n=this.rules.inline.reflink.exec(e))||(n=this.rules.inline.nolink.exec(e))){const e=t[(n[2]||n[1]).replace(/\s+/g," ").toLowerCase()];if(!e){const e=n[0].charAt(0);return{type:"text",raw:e,text:e}}return b(n,e,n[0],this.lexer)}}emStrong(e,t,n=""){let s=this.rules.inline.emStrongLDelim.exec(e);if(!s)return;if(s[3]&&n.match(/[\p{L}\p{N}]/u))return;if(!(s[1]||s[2]||"")||!n||this.rules.inline.punctuation.exec(n)){const n=[...s[0]].length-1;let r,i,l=n,o=0;const a="*"===s[0][0]?this.rules.inline.emStrongRDelimAst:this.rules.inline.emStrongRDelimUnd;for(a.lastIndex=0,t=t.slice(-1*e.length+n);null!=(s=a.exec(t));){if(r=s[1]||s[2]||s[3]||s[4]||s[5]||s[6],!r)continue;if(i=[...r].length,s[3]||s[4]){l+=i;continue}if((s[5]||s[6])&&n%3&&!((n+i)%3)){o+=i;continue}if(l-=i,l>0)continue;i=Math.min(i,i+l+o);const t=[...s[0]][0].length,a=e.slice(0,n+s.index+t+i);if(Math.min(n,i)%2){const e=a.slice(1,-1);return{type:"em",raw:a,text:e,tokens:this.lexer.inlineTokens(e)}}const c=a.slice(2,-2);return{type:"strong",raw:a,text:c,tokens:this.lexer.inlineTokens(c)}}}}codespan(e){const t=this.rules.inline.code.exec(e);if(t){let e=t[2].replace(/\n/g," ");const n=/[^ ]/.test(e),s=/^ /.test(e)&&/ $/.test(e);return n&&s&&(e=e.substring(1,e.length-1)),e=c(e,!0),{type:"codespan",raw:t[0],text:e}}}br(e){const t=this.rules.inline.br.exec(e);if(t)return{type:"br",raw:t[0]}}del(e){const t=this.rules.inline.del.exec(e);if(t)return{type:"del",raw:t[0],text:t[2],tokens:this.lexer.inlineTokens(t[2])}}autolink(e){const t=this.rules.inline.autolink.exec(e);if(t){let e,n;return"@"===t[2]?(e=c(t[1]),n="mailto:"+e):(e=c(t[1]),n=e),{type:"link",raw:t[0],text:e,href:n,tokens:[{type:"text",raw:e,text:e}]}}}url(e){let t;if(t=this.rules.inline.url.exec(e)){let e,n;if("@"===t[2])e=c(t[0]),n="mailto:"+e;else{let s;do{s=t[0],t[0]=this.rules.inline._backpedal.exec(t[0])?.[0]??""}while(s!==t[0]);e=c(t[0]),n="www."===t[1]?"http://"+t[0]:t[0]}return{type:"link",raw:t[0],text:e,href:n,tokens:[{type:"text",raw:e,text:e}]}}}inlineText(e){const t=this.rules.inline.text.exec(e);if(t){let e;return e=this.lexer.state.inRawBlock?t[0]:c(t[0]),{type:"text",raw:t[0],text:e}}}}const m=/^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/,y=/(?:[*+-]|\d{1,9}[.)])/,$=k(/^(?!bull |blockCode|fences|blockquote|heading|html)((?:.|\n(?!\s*?\n|bull |blockCode|fences|blockquote|heading|html))+?)\n {0,3}(=+|-+) *(?:\n+|$)/).replace(/bull/g,y).replace(/blockCode/g,/ {4}/).replace(/fences/g,/ {0,3}(?:`{3,}|~{3,})/).replace(/blockquote/g,/ {0,3}>/).replace(/heading/g,/ {0,3}#{1,6}/).replace(/html/g,/ {0,3}<[^\n>]+>\n/).getRegex(),z=/^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/,T=/(?!\s*\])(?:\\.|[^\[\]\\])+/,R=k(/^ {0,3}\[(label)\]: *(?:\n *)?([^<\s][^\s]*|<.*?>)(?:(?: +(?:\n *)?| *\n *)(title))? *(?:\n+|$)/).replace("label",T).replace("title",/(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/).getRegex(),_=k(/^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/).replace(/bull/g,y).getRegex(),A="address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|title|tr|track|ul",S=/<\!--(?:-?>|[\s\S]*?(?:-->|$))/,I=k("^ {0,3}(?:<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)|comment[^\\n]*(\\n+|$)|<\\?[\\s\\S]*?(?:\\?>\\n*|$)|<![A-Z][\\s\\S]*?(?:>\\n*|$)|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n *)+\\n|$)|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$))","i").replace("comment",S).replace("tag",A).replace("attribute",/ +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex(),E=k(z).replace("hr",m).replace("heading"," {0,3}#{1,6}(?:\\s|$)").replace("|lheading","").replace("|table","").replace("blockquote"," {0,3}>").replace("fences"," {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list"," {0,3}(?:[*+-]|1[.)]) ").replace("html","</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag",A).getRegex(),q={blockquote:k(/^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/).replace("paragraph",E).getRegex(),code:/^( {4}[^\n]+(?:\n(?: *(?:\n|$))*)?)+/,def:R,fences:/^ {0,3}(`{3,}(?=[^`\n]*(?:\n|$))|~{3,})([^\n]*)(?:\n|$)(?:|([\s\S]*?)(?:\n|$))(?: {0,3}\1[~`]* *(?=\n|$)|$)/,heading:/^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/,hr:m,html:I,lheading:$,list:_,newline:/^(?: *(?:\n|$))+/,paragraph:E,table:f,text:/^[^\n]+/},Z=k("^ *([^\\n ].*)\\n {0,3}((?:\\| *)?:?-+:? *(?:\\| *:?-+:? *)*(?:\\| *)?)(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)").replace("hr",m).replace("heading"," {0,3}#{1,6}(?:\\s|$)").replace("blockquote"," {0,3}>").replace("code"," {4}[^\\n]").replace("fences"," {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list"," {0,3}(?:[*+-]|1[.)]) ").replace("html","</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag",A).getRegex(),L={...q,table:Z,paragraph:k(z).replace("hr",m).replace("heading"," {0,3}#{1,6}(?:\\s|$)").replace("|lheading","").replace("table",Z).replace("blockquote"," {0,3}>").replace("fences"," {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n").replace("list"," {0,3}(?:[*+-]|1[.)]) ").replace("html","</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)").replace("tag",A).getRegex()},P={...q,html:k("^ *(?:comment *(?:\\n|\\s*$)|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)|<tag(?:\"[^\"]*\"|'[^']*'|\\s[^'\"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))").replace("comment",S).replace(/tag/g,"(?!(?:a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b").getRegex(),def:/^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,heading:/^(#{1,6})(.*)(?:\n+|$)/,fences:f,lheading:/^(.+?)\n {0,3}(=+|-+) *(?:\n+|$)/,paragraph:k(z).replace("hr",m).replace("heading"," *#{1,6} *[^\n]").replace("lheading",$).replace("|table","").replace("blockquote"," {0,3}>").replace("|fences","").replace("|list","").replace("|html","").replace("|tag","").getRegex()},Q=/^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/,v=/^( {2,}|\\)\n(?!\s*$)/,B="\\p{P}\\p{S}",C=k(/^((?![*_])[\spunctuation])/,"u").replace(/punctuation/g,B).getRegex(),M=k(/^(?:\*+(?:((?!\*)[punct])|[^\s*]))|^_+(?:((?!_)[punct])|([^\s_]))/,"u").replace(/punct/g,B).getRegex(),O=k("^[^_*]*?__[^_*]*?\\*[^_*]*?(?=__)|[^*]+(?=[^*])|(?!\\*)[punct](\\*+)(?=[\\s]|$)|[^punct\\s](\\*+)(?!\\*)(?=[punct\\s]|$)|(?!\\*)[punct\\s](\\*+)(?=[^punct\\s])|[\\s](\\*+)(?!\\*)(?=[punct])|(?!\\*)[punct](\\*+)(?!\\*)(?=[punct])|[^punct\\s](\\*+)(?=[^punct\\s])","gu").replace(/punct/g,B).getRegex(),D=k("^[^_*]*?\\*\\*[^_*]*?_[^_*]*?(?=\\*\\*)|[^_]+(?=[^_])|(?!_)[punct](_+)(?=[\\s]|$)|[^punct\\s](_+)(?!_)(?=[punct\\s]|$)|(?!_)[punct\\s](_+)(?=[^punct\\s])|[\\s](_+)(?!_)(?=[punct])|(?!_)[punct](_+)(?!_)(?=[punct])","gu").replace(/punct/g,B).getRegex(),j=k(/\\([punct])/,"gu").replace(/punct/g,B).getRegex(),H=k(/^<(scheme:[^\s\x00-\x1f<>]*|email)>/).replace("scheme",/[a-zA-Z][a-zA-Z0-9+.-]{1,31}/).replace("email",/[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/).getRegex(),U=k(S).replace("(?:--\x3e|$)","--\x3e").getRegex(),X=k("^comment|^</[a-zA-Z][\\w:-]*\\s*>|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>|^<\\?[\\s\\S]*?\\?>|^<![a-zA-Z]+\\s[\\s\\S]*?>|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>").replace("comment",U).replace("attribute",/\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/).getRegex(),F=/(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/,N=k(/^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/).replace("label",F).replace("href",/<(?:\\.|[^\n<>\\])+>|[^\s\x00-\x1f]*/).replace("title",/"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/).getRegex(),G=k(/^!?\[(label)\]\[(ref)\]/).replace("label",F).replace("ref",T).getRegex(),J=k(/^!?\[(ref)\](?:\[\])?/).replace("ref",T).getRegex(),K={_backpedal:f,anyPunctuation:j,autolink:H,blockSkip:/\[[^[\]]*?\]\([^\(\)]*?\)|`[^`]*?`|<[^<>]*?>/g,br:v,code:/^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/,del:f,emStrongLDelim:M,emStrongRDelimAst:O,emStrongRDelimUnd:D,escape:Q,link:N,nolink:J,punctuation:C,reflink:G,reflinkSearch:k("reflink|nolink(?!\\()","g").replace("reflink",G).replace("nolink",J).getRegex(),tag:X,text:/^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/,url:f},V={...K,link:k(/^!?\[(label)\]\((.*?)\)/).replace("label",F).getRegex(),reflink:k(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace("label",F).getRegex()},W={...K,escape:k(Q).replace("])","~|])").getRegex(),url:k(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/,"i").replace("email",/[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/).getRegex(),_backpedal:/(?:[^?!.,:;*_'"~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_'"~)]+(?!$))+/,del:/^(~~?)(?=[^\s~])([\s\S]*?[^\s~])\1(?=[^~]|$)/,text:/^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/},Y={...W,br:k(v).replace("{2,}","*").getRegex(),text:k(W.text).replace("\\b_","\\b_| {2,}\\n").replace(/\{2,\}/g,"*").getRegex()},ee={normal:q,gfm:L,pedantic:P},te={normal:K,gfm:W,breaks:Y,pedantic:V};class ne{tokens;options;state;tokenizer;inlineQueue;constructor(t){this.tokens=[],this.tokens.links=Object.create(null),this.options=t||e.defaults,this.options.tokenizer=this.options.tokenizer||new w,this.tokenizer=this.options.tokenizer,this.tokenizer.options=this.options,this.tokenizer.lexer=this,this.inlineQueue=[],this.state={inLink:!1,inRawBlock:!1,top:!0};const n={block:ee.normal,inline:te.normal};this.options.pedantic?(n.block=ee.pedantic,n.inline=te.pedantic):this.options.gfm&&(n.block=ee.gfm,this.options.breaks?n.inline=te.breaks:n.inline=te.gfm),this.tokenizer.rules=n}static get rules(){return{block:ee,inline:te}}static lex(e,t){return new ne(t).lex(e)}static lexInline(e,t){return new ne(t).inlineTokens(e)}lex(e){e=e.replace(/\r\n|\r/g,"\n"),this.blockTokens(e,this.tokens);for(let e=0;e<this.inlineQueue.length;e++){const t=this.inlineQueue[e];this.inlineTokens(t.src,t.tokens)}return this.inlineQueue=[],this.tokens}blockTokens(e,t=[]){let n,s,r,i;for(e=this.options.pedantic?e.replace(/\t/g,"    ").replace(/^ +$/gm,""):e.replace(/^( *)(\t+)/gm,((e,t,n)=>t+"    ".repeat(n.length)));e;)if(!(this.options.extensions&&this.options.extensions.block&&this.options.extensions.block.some((s=>!!(n=s.call({lexer:this},e,t))&&(e=e.substring(n.raw.length),t.push(n),!0)))))if(n=this.tokenizer.space(e))e=e.substring(n.raw.length),1===n.raw.length&&t.length>0?t[t.length-1].raw+="\n":t.push(n);else if(n=this.tokenizer.code(e))e=e.substring(n.raw.length),s=t[t.length-1],!s||"paragraph"!==s.type&&"text"!==s.type?t.push(n):(s.raw+="\n"+n.raw,s.text+="\n"+n.text,this.inlineQueue[this.inlineQueue.length-1].src=s.text);else if(n=this.tokenizer.fences(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.heading(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.hr(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.blockquote(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.list(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.html(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.def(e))e=e.substring(n.raw.length),s=t[t.length-1],!s||"paragraph"!==s.type&&"text"!==s.type?this.tokens.links[n.tag]||(this.tokens.links[n.tag]={href:n.href,title:n.title}):(s.raw+="\n"+n.raw,s.text+="\n"+n.raw,this.inlineQueue[this.inlineQueue.length-1].src=s.text);else if(n=this.tokenizer.table(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.lheading(e))e=e.substring(n.raw.length),t.push(n);else{if(r=e,this.options.extensions&&this.options.extensions.startBlock){let t=1/0;const n=e.slice(1);let s;this.options.extensions.startBlock.forEach((e=>{s=e.call({lexer:this},n),"number"==typeof s&&s>=0&&(t=Math.min(t,s))})),t<1/0&&t>=0&&(r=e.substring(0,t+1))}if(this.state.top&&(n=this.tokenizer.paragraph(r)))s=t[t.length-1],i&&"paragraph"===s.type?(s.raw+="\n"+n.raw,s.text+="\n"+n.text,this.inlineQueue.pop(),this.inlineQueue[this.inlineQueue.length-1].src=s.text):t.push(n),i=r.length!==e.length,e=e.substring(n.raw.length);else if(n=this.tokenizer.text(e))e=e.substring(n.raw.length),s=t[t.length-1],s&&"text"===s.type?(s.raw+="\n"+n.raw,s.text+="\n"+n.text,this.inlineQueue.pop(),this.inlineQueue[this.inlineQueue.length-1].src=s.text):t.push(n);else if(e){const t="Infinite loop on byte: "+e.charCodeAt(0);if(this.options.silent){console.error(t);break}throw new Error(t)}}return this.state.top=!0,t}inline(e,t=[]){return this.inlineQueue.push({src:e,tokens:t}),t}inlineTokens(e,t=[]){let n,s,r,i,l,o,a=e;if(this.tokens.links){const e=Object.keys(this.tokens.links);if(e.length>0)for(;null!=(i=this.tokenizer.rules.inline.reflinkSearch.exec(a));)e.includes(i[0].slice(i[0].lastIndexOf("[")+1,-1))&&(a=a.slice(0,i.index)+"["+"a".repeat(i[0].length-2)+"]"+a.slice(this.tokenizer.rules.inline.reflinkSearch.lastIndex))}for(;null!=(i=this.tokenizer.rules.inline.blockSkip.exec(a));)a=a.slice(0,i.index)+"["+"a".repeat(i[0].length-2)+"]"+a.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);for(;null!=(i=this.tokenizer.rules.inline.anyPunctuation.exec(a));)a=a.slice(0,i.index)+"++"+a.slice(this.tokenizer.rules.inline.anyPunctuation.lastIndex);for(;e;)if(l||(o=""),l=!1,!(this.options.extensions&&this.options.extensions.inline&&this.options.extensions.inline.some((s=>!!(n=s.call({lexer:this},e,t))&&(e=e.substring(n.raw.length),t.push(n),!0)))))if(n=this.tokenizer.escape(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.tag(e))e=e.substring(n.raw.length),s=t[t.length-1],s&&"text"===n.type&&"text"===s.type?(s.raw+=n.raw,s.text+=n.text):t.push(n);else if(n=this.tokenizer.link(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.reflink(e,this.tokens.links))e=e.substring(n.raw.length),s=t[t.length-1],s&&"text"===n.type&&"text"===s.type?(s.raw+=n.raw,s.text+=n.text):t.push(n);else if(n=this.tokenizer.emStrong(e,a,o))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.codespan(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.br(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.del(e))e=e.substring(n.raw.length),t.push(n);else if(n=this.tokenizer.autolink(e))e=e.substring(n.raw.length),t.push(n);else if(this.state.inLink||!(n=this.tokenizer.url(e))){if(r=e,this.options.extensions&&this.options.extensions.startInline){let t=1/0;const n=e.slice(1);let s;this.options.extensions.startInline.forEach((e=>{s=e.call({lexer:this},n),"number"==typeof s&&s>=0&&(t=Math.min(t,s))})),t<1/0&&t>=0&&(r=e.substring(0,t+1))}if(n=this.tokenizer.inlineText(r))e=e.substring(n.raw.length),"_"!==n.raw.slice(-1)&&(o=n.raw.slice(-1)),l=!0,s=t[t.length-1],s&&"text"===s.type?(s.raw+=n.raw,s.text+=n.text):t.push(n);else if(e){const t="Infinite loop on byte: "+e.charCodeAt(0);if(this.options.silent){console.error(t);break}throw new Error(t)}}else e=e.substring(n.raw.length),t.push(n);return t}}class se{options;constructor(t){this.options=t||e.defaults}code(e,t,n){const s=(t||"").match(/^\S*/)?.[0];return e=e.replace(/\n$/,"")+"\n",s?'<pre><code class="language-'+c(s)+'">'+(n?e:c(e,!0))+"</code></pre>\n":"<pre><code>"+(n?e:c(e,!0))+"</code></pre>\n"}blockquote(e){return`<blockquote>\n${e}</blockquote>\n`}html(e,t){return e}heading(e,t,n){return`<h${t}>${e}</h${t}>\n`}hr(){return"<hr>\n"}list(e,t,n){const s=t?"ol":"ul";return"<"+s+(t&&1!==n?' start="'+n+'"':"")+">\n"+e+"</"+s+">\n"}listitem(e,t,n){return`<li>${e}</li>\n`}checkbox(e){return"<input "+(e?'checked="" ':"")+'disabled="" type="checkbox">'}paragraph(e){return`<p>${e}</p>\n`}table(e,t){return t&&(t=`<tbody>${t}</tbody>`),"<table>\n<thead>\n"+e+"</thead>\n"+t+"</table>\n"}tablerow(e){return`<tr>\n${e}</tr>\n`}tablecell(e,t){const n=t.header?"th":"td";return(t.align?`<${n} align="${t.align}">`:`<${n}>`)+e+`</${n}>\n`}strong(e){return`<strong>${e}</strong>`}em(e){return`<em>${e}</em>`}codespan(e){return`<code>${e}</code>`}br(){return"<br>"}del(e){return`<del>${e}</del>`}link(e,t,n){const s=g(e);if(null===s)return n;let r='<a href="'+(e=s)+'"';return t&&(r+=' title="'+t+'"'),r+=">"+n+"</a>",r}image(e,t,n){const s=g(e);if(null===s)return n;let r=`<img src="${e=s}" alt="${n}"`;return t&&(r+=` title="${t}"`),r+=">",r}text(e){return e}}class re{strong(e){return e}em(e){return e}codespan(e){return e}del(e){return e}html(e){return e}text(e){return e}link(e,t,n){return""+n}image(e,t,n){return""+n}br(){return""}}class ie{options;renderer;textRenderer;constructor(t){this.options=t||e.defaults,this.options.renderer=this.options.renderer||new se,this.renderer=this.options.renderer,this.renderer.options=this.options,this.textRenderer=new re}static parse(e,t){return new ie(t).parse(e)}static parseInline(e,t){return new ie(t).parseInline(e)}parse(e,t=!0){let n="";for(let s=0;s<e.length;s++){const r=e[s];if(this.options.extensions&&this.options.extensions.renderers&&this.options.extensions.renderers[r.type]){const e=r,t=this.options.extensions.renderers[e.type].call({parser:this},e);if(!1!==t||!["space","hr","heading","code","table","blockquote","list","html","paragraph","text"].includes(e.type)){n+=t||"";continue}}switch(r.type){case"space":continue;case"hr":n+=this.renderer.hr();continue;case"heading":{const e=r;n+=this.renderer.heading(this.parseInline(e.tokens),e.depth,p(this.parseInline(e.tokens,this.textRenderer)));continue}case"code":{const e=r;n+=this.renderer.code(e.text,e.lang,!!e.escaped);continue}case"table":{const e=r;let t="",s="";for(let t=0;t<e.header.length;t++)s+=this.renderer.tablecell(this.parseInline(e.header[t].tokens),{header:!0,align:e.align[t]});t+=this.renderer.tablerow(s);let i="";for(let t=0;t<e.rows.length;t++){const n=e.rows[t];s="";for(let t=0;t<n.length;t++)s+=this.renderer.tablecell(this.parseInline(n[t].tokens),{header:!1,align:e.align[t]});i+=this.renderer.tablerow(s)}n+=this.renderer.table(t,i);continue}case"blockquote":{const e=r,t=this.parse(e.tokens);n+=this.renderer.blockquote(t);continue}case"list":{const e=r,t=e.ordered,s=e.start,i=e.loose;let l="";for(let t=0;t<e.items.length;t++){const n=e.items[t],s=n.checked,r=n.task;let o="";if(n.task){const e=this.renderer.checkbox(!!s);i?n.tokens.length>0&&"paragraph"===n.tokens[0].type?(n.tokens[0].text=e+" "+n.tokens[0].text,n.tokens[0].tokens&&n.tokens[0].tokens.length>0&&"text"===n.tokens[0].tokens[0].type&&(n.tokens[0].tokens[0].text=e+" "+n.tokens[0].tokens[0].text)):n.tokens.unshift({type:"text",text:e+" "}):o+=e+" "}o+=this.parse(n.tokens,i),l+=this.renderer.listitem(o,r,!!s)}n+=this.renderer.list(l,t,s);continue}case"html":{const e=r;n+=this.renderer.html(e.text,e.block);continue}case"paragraph":{const e=r;n+=this.renderer.paragraph(this.parseInline(e.tokens));continue}case"text":{let i=r,l=i.tokens?this.parseInline(i.tokens):i.text;for(;s+1<e.length&&"text"===e[s+1].type;)i=e[++s],l+="\n"+(i.tokens?this.parseInline(i.tokens):i.text);n+=t?this.renderer.paragraph(l):l;continue}default:{const e='Token with "'+r.type+'" type was not found.';if(this.options.silent)return console.error(e),"";throw new Error(e)}}}return n}parseInline(e,t){t=t||this.renderer;let n="";for(let s=0;s<e.length;s++){const r=e[s];if(this.options.extensions&&this.options.extensions.renderers&&this.options.extensions.renderers[r.type]){const e=this.options.extensions.renderers[r.type].call({parser:this},r);if(!1!==e||!["escape","html","link","image","strong","em","codespan","br","del","text"].includes(r.type)){n+=e||"";continue}}switch(r.type){case"escape":{const e=r;n+=t.text(e.text);break}case"html":{const e=r;n+=t.html(e.text);break}case"link":{const e=r;n+=t.link(e.href,e.title,this.parseInline(e.tokens,t));break}case"image":{const e=r;n+=t.image(e.href,e.title,e.text);break}case"strong":{const e=r;n+=t.strong(this.parseInline(e.tokens,t));break}case"em":{const e=r;n+=t.em(this.parseInline(e.tokens,t));break}case"codespan":{const e=r;n+=t.codespan(e.text);break}case"br":n+=t.br();break;case"del":{const e=r;n+=t.del(this.parseInline(e.tokens,t));break}case"text":{const e=r;n+=t.text(e.text);break}default:{const e='Token with "'+r.type+'" type was not found.';if(this.options.silent)return console.error(e),"";throw new Error(e)}}}return n}}class le{options;constructor(t){this.options=t||e.defaults}static passThroughHooks=new Set(["preprocess","postprocess","processAllTokens"]);preprocess(e){return e}postprocess(e){return e}processAllTokens(e){return e}}class oe{defaults={async:!1,breaks:!1,extensions:null,gfm:!0,hooks:null,pedantic:!1,renderer:null,silent:!1,tokenizer:null,walkTokens:null};options=this.setOptions;parse=this.#e(ne.lex,ie.parse);parseInline=this.#e(ne.lexInline,ie.parseInline);Parser=ie;Renderer=se;TextRenderer=re;Lexer=ne;Tokenizer=w;Hooks=le;constructor(...e){this.use(...e)}walkTokens(e,t){let n=[];for(const s of e)switch(n=n.concat(t.call(this,s)),s.type){case"table":{const e=s;for(const s of e.header)n=n.concat(this.walkTokens(s.tokens,t));for(const s of e.rows)for(const e of s)n=n.concat(this.walkTokens(e.tokens,t));break}case"list":{const e=s;n=n.concat(this.walkTokens(e.items,t));break}default:{const e=s;this.defaults.extensions?.childTokens?.[e.type]?this.defaults.extensions.childTokens[e.type].forEach((s=>{const r=e[s].flat(1/0);n=n.concat(this.walkTokens(r,t))})):e.tokens&&(n=n.concat(this.walkTokens(e.tokens,t)))}}return n}use(...e){const t=this.defaults.extensions||{renderers:{},childTokens:{}};return e.forEach((e=>{const n={...e};if(n.async=this.defaults.async||n.async||!1,e.extensions&&(e.extensions.forEach((e=>{if(!e.name)throw new Error("extension name required");if("renderer"in e){const n=t.renderers[e.name];t.renderers[e.name]=n?function(...t){let s=e.renderer.apply(this,t);return!1===s&&(s=n.apply(this,t)),s}:e.renderer}if("tokenizer"in e){if(!e.level||"block"!==e.level&&"inline"!==e.level)throw new Error("extension level must be 'block' or 'inline'");const n=t[e.level];n?n.unshift(e.tokenizer):t[e.level]=[e.tokenizer],e.start&&("block"===e.level?t.startBlock?t.startBlock.push(e.start):t.startBlock=[e.start]:"inline"===e.level&&(t.startInline?t.startInline.push(e.start):t.startInline=[e.start]))}"childTokens"in e&&e.childTokens&&(t.childTokens[e.name]=e.childTokens)})),n.extensions=t),e.renderer){const t=this.defaults.renderer||new se(this.defaults);for(const n in e.renderer){if(!(n in t))throw new Error(`renderer '${n}' does not exist`);if("options"===n)continue;const s=n,r=e.renderer[s],i=t[s];t[s]=(...e)=>{let n=r.apply(t,e);return!1===n&&(n=i.apply(t,e)),n||""}}n.renderer=t}if(e.tokenizer){const t=this.defaults.tokenizer||new w(this.defaults);for(const n in e.tokenizer){if(!(n in t))throw new Error(`tokenizer '${n}' does not exist`);if(["options","rules","lexer"].includes(n))continue;const s=n,r=e.tokenizer[s],i=t[s];t[s]=(...e)=>{let n=r.apply(t,e);return!1===n&&(n=i.apply(t,e)),n}}n.tokenizer=t}if(e.hooks){const t=this.defaults.hooks||new le;for(const n in e.hooks){if(!(n in t))throw new Error(`hook '${n}' does not exist`);if("options"===n)continue;const s=n,r=e.hooks[s],i=t[s];le.passThroughHooks.has(n)?t[s]=e=>{if(this.defaults.async)return Promise.resolve(r.call(t,e)).then((e=>i.call(t,e)));const n=r.call(t,e);return i.call(t,n)}:t[s]=(...e)=>{let n=r.apply(t,e);return!1===n&&(n=i.apply(t,e)),n}}n.hooks=t}if(e.walkTokens){const t=this.defaults.walkTokens,s=e.walkTokens;n.walkTokens=function(e){let n=[];return n.push(s.call(this,e)),t&&(n=n.concat(t.call(this,e))),n}}this.defaults={...this.defaults,...n}})),this}setOptions(e){return this.defaults={...this.defaults,...e},this}lexer(e,t){return ne.lex(e,t??this.defaults)}parser(e,t){return ie.parse(e,t??this.defaults)}#e(e,t){return(n,s)=>{const r={...s},i={...this.defaults,...r};!0===this.defaults.async&&!1===r.async&&(i.silent||console.warn("marked(): The async option was set to true by an extension. The async: false option sent to parse will be ignored."),i.async=!0);const l=this.#t(!!i.silent,!!i.async);if(null==n)return l(new Error("marked(): input parameter is undefined or null"));if("string"!=typeof n)return l(new Error("marked(): input parameter is of type "+Object.prototype.toString.call(n)+", string expected"));if(i.hooks&&(i.hooks.options=i),i.async)return Promise.resolve(i.hooks?i.hooks.preprocess(n):n).then((t=>e(t,i))).then((e=>i.hooks?i.hooks.processAllTokens(e):e)).then((e=>i.walkTokens?Promise.all(this.walkTokens(e,i.walkTokens)).then((()=>e)):e)).then((e=>t(e,i))).then((e=>i.hooks?i.hooks.postprocess(e):e)).catch(l);try{i.hooks&&(n=i.hooks.preprocess(n));let s=e(n,i);i.hooks&&(s=i.hooks.processAllTokens(s)),i.walkTokens&&this.walkTokens(s,i.walkTokens);let r=t(s,i);return i.hooks&&(r=i.hooks.postprocess(r)),r}catch(e){return l(e)}}}#t(e,t){return n=>{if(n.message+="\nPlease report this to https://github.com/markedjs/marked.",e){const e="<p>An error occurred:</p><pre>"+c(n.message+"",!0)+"</pre>";return t?Promise.resolve(e):e}if(t)return Promise.reject(n);throw n}}}const ae=new oe;function ce(e,t){return ae.parse(e,t)}ce.options=ce.setOptions=function(e){return ae.setOptions(e),ce.defaults=ae.defaults,n(ce.defaults),ce},ce.getDefaults=t,ce.defaults=e.defaults,ce.use=function(...e){return ae.use(...e),ce.defaults=ae.defaults,n(ce.defaults),ce},ce.walkTokens=function(e,t){return ae.walkTokens(e,t)},ce.parseInline=ae.parseInline,ce.Parser=ie,ce.parser=ie.parse,ce.Renderer=se,ce.TextRenderer=re,ce.Lexer=ne,ce.lexer=ne.lex,ce.Tokenizer=w,ce.Hooks=le,ce.parse=ce;const he=ce.options,pe=ce.setOptions,ue=ce.use,ke=ce.walkTokens,ge=ce.parseInline,fe=ce,de=ie.parse,xe=ne.lex;e.Hooks=le,e.Lexer=ne,e.Marked=oe,e.Parser=ie,e.Renderer=se,e.TextRenderer=re,e.Tokenizer=w,e.getDefaults=t,e.lexer=xe,e.marked=ce,e.options=he,e.parse=fe,e.parseInline=ge,e.parser=de,e.setOptions=pe,e.use=ue,e.walkTokens=ke}));
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+const contentEl = document.getElementById('content');
+const tocEl = document.getElementById('toc');
+const statusEl = document.getElementById('status');
+const searchEl = document.getElementById('search');
+const searchInfo = document.getElementById('searchInfo');
+const sidebar = document.getElementById('sidebar');
+
+function slugify(t) {
+  return String(t).toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-');
+}
+
+function getEmbedded() {
+  return document.getElementById('embedded-md').textContent.replace(/^\n/, '');
+}
+
+async function getMarkdown() {
+  const embedded = getEmbedded();
+  // If running over http(s), try fresh t2.md first so edits show up, else use embedded
+  if (location.protocol.startsWith('http')) {
+    try {
+      const res = await fetch('t2.md', { cache: 'no-store' });
+      if (res.ok) {
+        const txt = await res.text();
+        if (txt.trim()) return { md: txt, src: 't2.md (live)' };
+      }
+    } catch(e) {}
+  }
+  return { md: embedded, src: 'embedded (double-click safe)' };
+}
+
+function render(md, src) {
+  statusEl.textContent = 'Source: ' + src + ' — ' + md.split('\n').length + ' lines';
+  marked.setOptions({ gfm:true, breaks:false });
+  const renderer = new marked.Renderer();
+  // Compatible with marked v12 (text,level,raw) and v15+ (token object)
+  renderer.heading = function(text, level, raw) {
+    if (typeof text === 'object' && text !== null) {
+      const tok = text;
+      level = tok.depth;
+      raw = tok.text;
+      text = this.parser.parseInline(tok.tokens);
+    }
+    const id = slugify(String(raw || text).replace(/<[^>]+>/g,''));
+    return '<h'+level+' id="'+id+'">'+text+'</h'+level+'>';
+  };
+  renderer.code = function(code, lang) {
+    let codeStr = '', langStr = 'plaintext';
+    if (typeof code === 'object' && code !== null) {
+      codeStr = code.text || '';
+      langStr = code.lang || 'plaintext';
+    } else {
+      codeStr = code; langStr = lang || 'plaintext';
+    }
+    const esc = String(codeStr).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return '<pre><button class="copy-btn">Copy</button><code class="language-'+langStr+'">'+esc+'</code></pre>';
+  };
+  contentEl.innerHTML = marked.parse(md, { renderer });
+  document.querySelectorAll('pre code').forEach(el => { try { hljs.highlightElement(el); } catch(e){} });
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const code = e.target.parentElement.querySelector('code').innerText;
+      try { await navigator.clipboard.writeText(code); btn.textContent='Copied!'; }
+      catch(err){ btn.textContent='Select+Ctrl+C'; }
+      setTimeout(()=>btn.textContent='Copy',1200);
+    });
+  });
+  // Anchor copy-link on headings
+  contentEl.querySelectorAll('h1,h2,h3,h4,h5,h6').forEach(h => {
+    if(!h.id) return;
+    const a = document.createElement('a');
+    a.className='anchor'; a.href='#'+h.id; a.textContent='#';
+    a.setAttribute('aria-label','Copy link to this section');
+    a.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const url = location.origin + location.pathname + '#' + h.id;
+      try { await navigator.clipboard.writeText(url); } catch(err){}
+      history.pushState(null,'','#'+h.id);
+    });
+    h.appendChild(a);
+  });
+  // External links open in new tab
+  contentEl.querySelectorAll('a[href^="http"]').forEach(a => {
+    a.target='_blank'; a.rel='noopener noreferrer';
+  });
+  // Footer status
+  document.getElementById('footer').textContent = src + ' • ' + md.split('\n').length + ' lines';
+  buildTOC();
+  enableSpy();
+}
+
+function buildTOC() {
+  tocEl.innerHTML='';
+  const heads = contentEl.querySelectorAll('h2,h3,h4');
+  let lastH2 = null, lastH3 = null;
+  heads.forEach(h=>{
+    if(!h.id) h.id=slugify(h.textContent);
+    // Exclude the '#' anchor link text appended to headings
+    let title = h.textContent;
+    const anchorEl = h.querySelector(':scope > .anchor');
+    if (anchorEl) title = title.slice(0, -anchorEl.textContent.length).trim();
+    const a=document.createElement('a');
+    a.href='#'+h.id; a.textContent=title;
+    a.dataset.text=title.toLowerCase();
+    a.addEventListener('click',()=>sidebar.classList.remove('open'));
+
+    if(h.tagName==='H2'){
+      // New H2 group
+      const wrap=document.createElement('div');
+      wrap.className='toc-group';
+      const toggle=document.createElement('span');
+      toggle.className='toc-toggle'; toggle.textContent='▾';
+      toggle.setAttribute('aria-label','Toggle section');
+      a.prepend(toggle);
+      wrap.appendChild(a);
+      const children=document.createElement('div');
+      children.className='toc-children';
+      wrap.appendChild(children);
+      tocEl.appendChild(wrap);
+      lastH2=children; lastH3=null;
+      // Toggle logic
+      toggle.addEventListener('click',(e)=>{
+        e.preventDefault(); e.stopPropagation();
+        const collapsed=children.classList.toggle('collapsed');
+        toggle.textContent=collapsed?'▸':'▾';
+      });
+    } else if(h.tagName==='H3' && lastH2){
+      a.style.paddingLeft='20px';
+      const wrap=document.createElement('div');
+      wrap.className='toc-group';
+      const toggle=document.createElement('span');
+      toggle.className='toc-toggle'; toggle.textContent='▾';
+      toggle.setAttribute('aria-label','Toggle section');
+      a.prepend(toggle);
+      wrap.appendChild(a);
+      const children=document.createElement('div');
+      children.className='toc-children';
+      wrap.appendChild(children);
+      lastH2.appendChild(wrap);
+      lastH3=children;
+      toggle.addEventListener('click',(e)=>{
+        e.preventDefault(); e.stopPropagation();
+        const collapsed=children.classList.toggle('collapsed');
+        toggle.textContent=collapsed?'▸':'▾';
+      });
+    } else if(h.tagName==='H4' && lastH3){
+      a.style.paddingLeft='32px'; a.style.fontSize='12.5px'; a.style.opacity='.85';
+      lastH3.appendChild(a);
+    } else if(h.tagName==='H3'){
+      // Fallback: no parent H2 yet
+      a.style.paddingLeft='20px';
+      tocEl.appendChild(a);
+    } else {
+      tocEl.appendChild(a);
+    }
+  });
+  if(!tocEl.children.length) statusEl.textContent += ' — WARNING: no headings found, markdown failed to parse.';
+}
+
+function enableSpy(){
+  const links=[...tocEl.querySelectorAll('a[href^="#"]')];
+  const map=new Map(links.map(l=>[l.getAttribute('href').slice(1),l]));
+  let activeLink = null;
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(en=>{
+      if(en.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const l=map.get(en.target.id);
+        if(l){
+          l.classList.add('active');
+          activeLink=l;
+          // Auto-scroll TOC to keep active item visible
+          l.scrollIntoView({block:'nearest',behavior:'smooth'});
+        }
+      }
+    });
+  },{rootMargin:'-60px 0px -70% 0px'});
+  contentEl.querySelectorAll('h2,h3,h4').forEach(h=>obs.observe(h));
+}
+
+searchEl.addEventListener('input',()=>{
+  const q=searchEl.value.toLowerCase().trim();
+  // Filter TOC links and show/hide parent groups
+  tocEl.querySelectorAll('a[href^="#"]').forEach(a=>{
+    const match = !q || a.dataset.text.includes(q);
+    a.classList.toggle('hidden', !match);
+  });
+  // Show/hide toc-groups based on whether they have visible children
+  tocEl.querySelectorAll('.toc-group').forEach(g=>{
+    const hasVisible = g.querySelector('a:not(.hidden)');
+    g.style.display = hasVisible ? '' : 'none';
+  });
+  // Content highlighting
+  highlightContent(q);
+});
+
+let searchMatches = [], searchIdx = -1;
+
+function clearHighlights() {
+  contentEl.querySelectorAll('mark.search-hl').forEach(m => {
+    const parent = m.parentNode;
+    parent.replaceChild(document.createTextNode(m.textContent), m);
+    parent.normalize();
+  });
+  searchMatches = []; searchIdx = -1;
+  searchInfo.textContent = '';
+}
+
+function highlightContent(q) {
+  clearHighlights();
+  if (!q) return;
+  // Walk text nodes in content, skip pre/code and script
+  const walker = document.createTreeWalker(contentEl, NodeFilter.SHOW_TEXT, {
+    acceptNode(n) {
+      const p = n.parentNode;
+      if (p && (p.tagName === 'SCRIPT' || p.tagName === 'STYLE')) return NodeFilter.FILTER_REJECT;
+      if (p && p.closest && p.closest('pre,code,button,.anchor')) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(node => {
+    const text = node.textContent;
+    const lower = text.toLowerCase();
+    let idx = lower.indexOf(q);
+    if (idx === -1) return;
+    const frag = document.createDocumentFragment();
+    let last = 0;
+    while (idx !== -1) {
+      frag.appendChild(document.createTextNode(text.slice(last, idx)));
+      const mark = document.createElement('mark');
+      mark.className = 'search-hl';
+      mark.textContent = text.slice(idx, idx + q.length);
+      frag.appendChild(mark);
+      searchMatches.push(mark);
+      last = idx + q.length;
+      idx = lower.indexOf(q, last);
+    }
+    frag.appendChild(document.createTextNode(text.slice(last)));
+    node.parentNode.replaceChild(frag, node);
+  });
+  if (searchMatches.length) {
+    searchIdx = 0;
+    searchMatches[0].classList.add('current');
+    searchMatches[0].scrollIntoView({block:'center',behavior:'smooth'});
+    searchInfo.textContent = '1/' + searchMatches.length;
+  } else {
+    searchInfo.textContent = '0 results';
+  }
+}
+
+function jumpMatch(dir) {
+  if (!searchMatches.length) return;
+  searchMatches[searchIdx]?.classList.remove('current');
+  searchIdx = (searchIdx + dir + searchMatches.length) % searchMatches.length;
+  searchMatches[searchIdx].classList.add('current');
+  searchMatches[searchIdx].scrollIntoView({block:'center',behavior:'smooth'});
+  searchInfo.textContent = (searchIdx+1) + '/' + searchMatches.length;
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='/' && document.activeElement!==searchEl && !e.ctrlKey && !e.metaKey){
+    e.preventDefault(); searchEl.focus();
+  }
+  if(document.activeElement===searchEl){
+    if(e.key==='Enter'){
+      e.preventDefault();
+      jumpMatch(e.shiftKey ? -1 : 1);
+    }
+    if(e.key==='Escape'){
+      searchEl.value=''; searchEl.dispatchEvent(new Event('input'));
+      searchEl.blur();
+    }
+  }
+});
+
+const themeBtn=document.getElementById('themeBtn');
+function setTheme(t){document.documentElement.dataset.theme=t;try{localStorage.setItem('t2-theme',t);}catch(e){}themeBtn.textContent=t==='dark'?'☀️':'🌙';document.getElementById('hljs-dark').disabled=t!=='dark';document.getElementById('hljs-light').disabled=t==='dark';}
+try{setTheme(localStorage.getItem('t2-theme')||'light');}catch(e){setTheme('light');}
+themeBtn.onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
+document.getElementById('menuBtn').onclick=()=>sidebar.classList.toggle('open');
+document.getElementById('printBtn').onclick=()=>window.print();
+const backTop=document.getElementById('backTop');const progress=document.getElementById('progress');
+window.addEventListener('scroll',()=>{backTop.style.display=window.scrollY>600?'block':'none';const h=document.documentElement.scrollHeight-innerHeight;progress.style.width=(h>0?window.scrollY/h*100:0)+'%';});
+backTop.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+
+if(!window.marked){
+  statusEl.innerHTML='Markdown parser failed to initialise. Your browser may be blocking scripts — please allow JavaScript and reload.';
+} else {
+  getMarkdown().then(({md,src})=>{
+    if(!md.trim()){statusEl.textContent='Markdown is empty.';return;}
+    render(md,src);
+  });
+}
+</script>
+</body>
+</html>
